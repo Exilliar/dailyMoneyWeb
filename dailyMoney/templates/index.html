@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+<h1>Welcome to dailyMoney</h1>
+<p>Next payday: {{ payday }}</p>
+<p>Days left: {{ diff }}</p>
+<form id="data-form" onsubmit="getDaily(); return false">
+  {% comment %} {% csrf_token %} {% endcomment %}
+  <label for="account">Money in account</label>
+  <input type="number" id="account" step="0.01" />
+  <label for="pending">Pending (not required)</label>
+  <input type="number" id="pending" step="0.01" />
+  <label for="save">Money to save</label>
+  <input type="number" id="save" name="save" step="0.01" />
+  <button type="submit">Submit</button>
+</form>
+<div id="results"></div>
+{% endblock %}
