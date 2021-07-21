@@ -1,0 +1,10 @@
+body {
+  font-family: Verdana, sans-serif;
+}
+
+.colCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
