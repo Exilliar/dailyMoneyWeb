@@ -8,9 +8,7 @@ function getDaily() {
   // not using url matching, but that seems kinda rubbish (at least for this use case)
   fetch(`/calc?account=${accountFinal}&save=${save}`).then((res) => {
     res.json().then((json) => {
-      document.getElementById(
-        "results"
-      ).innerHTML = `<p>Spent per day: ${json.daily}</p>`;
+      document.getElementById("results").innerHTML = result(json.daily);
     });
   });
 }
