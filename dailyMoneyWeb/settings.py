@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-2@-whm4)5f^@4cb*og_ddylh)8@z36=a6ze_$cr4kx^vo0j!hb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'dailyMoney.rorywebber.co.uk',
+    '78.141.194.165',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
