@@ -1,25 +1,29 @@
 {% extends "base.html" %} {% block content %} {% load static %}
-<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
-{% load static %}
-<script
-  type="text/javascript"
-  src="{% static 'js/components/result.js' %}"
-></script>
-{% load static %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 <h1 class="text-center">Daily Money</h1>
 <div class="grid mb-2">
   <div>Next payday:</div>
-  <div>{{ payday }}</div>
+  <div id="payday">{{ payday }}</div>
   <div>Days left:</div>
-  <div>{{ diff }}</div>
+  <div id="diff">{{ diff }}</div>
 </div>
+<button class="btn btn-link" id="edit-payday">Edit payday</button>
+<!-- form should be hidden until the button is clicked -->
+<form
+  class="form-group colCenter"
+  id="payday-form"
+  onsubmit="changePayday(); return false"
+  hidden
+>
+  <label for="day">Day (15th, 1st, etc)</label>
+  <input type="number" id="day" class="form-control input" max="31" min="1" />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 <form
   id="data-form"
   onsubmit="getDaily(); return false"
   class="form-group colCenter"
 >
-  {% comment %} {% csrf_token %} {% endcomment %}
   <label for="account">Money in account</label>
   <input type="number" id="account" step="0.01" class="form-control input" />
   <label for="pending">Pending (not required)</label>
@@ -34,5 +38,13 @@
   />
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<div id="results"></div>
+<div id="results-container">
+  <fieldset class="perDayContainer" id="results" hidden>
+    <legend class="perDayTitle">Spend per day</legend>
+    <div class="daily" id="daily"></div>
+  </fieldset>
+</div>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
