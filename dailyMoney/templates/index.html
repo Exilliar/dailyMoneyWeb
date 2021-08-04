@@ -7,7 +7,7 @@
   <div>Days left:</div>
   <div id="diff">{{ diff }}</div>
 </div>
-<button class="btn btn-link" id="edit-payday">Edit payday</button>
+<button class="btn btn-link mb-2" id="edit-payday">Edit payday</button>
 <!-- form should be hidden until the button above is clicked -->
 <form
   class="form-group colCenter"
@@ -47,6 +47,12 @@
       <input type="checkbox" id="storeSave" class="form-check-label" />
       <label for="storeSave">Remember save</label>
     </div>
+  </div>
+  <button id="advanced" type="button" class="btn btn-link mb-2">
+    Advanced
+  </button>
+  <div id="advanced-options" hidden>
+    <p>Advanced options</p>
   </div>
   <button id="main-submit" type="submit" class="btn btn-primary">Submit</button>
 </form>

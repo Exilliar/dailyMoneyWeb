@@ -1,4 +1,5 @@
 let formDisabled = false;
+let advanced = false; // whether the advanced options are being used
 
 loadFromLocal();
 
@@ -8,6 +9,17 @@ document.getElementById("edit-payday").addEventListener("click", () => {
     paydayForm.removeAttribute("hidden");
   } else {
     paydayForm.setAttribute("hidden", true);
+  }
+});
+
+document.getElementById("advanced").addEventListener("click", () => {
+  const advancedOptions = document.getElementById("advanced-options");
+  if (advancedOptions.hasAttribute("hidden")) {
+    advanced = true;
+    advancedOptions.removeAttribute("hidden");
+  } else {
+    advanced = false;
+    advancedOptions.setAttribute("hidden", true);
   }
 });
 
