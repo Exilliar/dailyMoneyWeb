@@ -35,7 +35,14 @@
   width: 100%;
   text-align: center;
   font-size: 2rem;
-  padding-bottom: 1.5rem;
+}
+
+.dailyLeft {
+  font-size: 1.9rem;
+}
+
+.dailyLeftTitle {
+  font-size: 1.5rem;
 }
 
 .store-check {

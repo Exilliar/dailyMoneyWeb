@@ -9,7 +9,8 @@ from django.views.decorators.http import require_http_methods
 def index(request):
     payday = calcPayday()
     diff = calcDiff(payday)
-    paydayDisplay = payday.strftime('%d') + "/" + payday.strftime('%m') + "/" + payday.strftime('%y')
+    paydayDisplay = payday.strftime(
+        '%d') + "/" + payday.strftime('%m') + "/" + payday.strftime('%y')
     return render(request, 'index.html', context={
         'payday': paydayDisplay,
         'diff': diff
@@ -25,8 +26,10 @@ def calc(request):
     daily = calcDaily(account, save, diff)
 
     return JsonResponse({
-        'daily': daily
+        'daily': "£" + str(daily),
+        'raw': daily
     })
+
 
 @require_http_methods(['GET'])
 def payday(request):

@@ -4,23 +4,15 @@ let advanced = false; // whether the advanced options are being used
 loadFromLocal();
 
 document.getElementById("edit-payday").addEventListener("click", () => {
-  const paydayForm = document.getElementById("payday-form");
-  if (paydayForm.hasAttribute("hidden")) {
-    paydayForm.removeAttribute("hidden");
-  } else {
-    paydayForm.setAttribute("hidden", true);
-  }
+  toggleHidden("payday-form");
 });
 
 document.getElementById("advanced").addEventListener("click", () => {
-  const advancedOptions = document.getElementById("advanced-options");
-  if (advancedOptions.hasAttribute("hidden")) {
-    advanced = true;
-    advancedOptions.removeAttribute("hidden");
-  } else {
-    advanced = false;
-    advancedOptions.setAttribute("hidden", true);
-  }
+  toggleHidden(
+    "advanced-options",
+    () => (advanced = true),
+    () => (advanced = false)
+  );
 });
 
 function loadFromLocal() {
@@ -48,7 +40,7 @@ function getDaily() {
     let pending = form.elements.pending.value;
     pending = pending ? pending : 0;
     const save = form.elements.save.value;
-    const accountFinal = account - pending;
+    let accountFinal = account - pending;
     const diff = +document.getElementById("diff").innerText;
 
     const store = form.elements.storeSave.checked; // boolean
@@ -56,17 +48,39 @@ function getDaily() {
       window.localStorage.setItem("save", save);
     }
 
-    // not using url matching, but that seems kinda rubbish (at least for this use case)
-    fetch(`/calc?account=${accountFinal}&save=${save}&diff=${diff}`).then(
-      (res) => {
-        res.json().then((json) => {
-          // json: { daily: string }
-          document.getElementById("results").removeAttribute("hidden");
-          document.getElementById("daily").innerHTML = json.daily;
-        });
+    let spentToday;
+
+    if (advanced) {
+      spentToday = +form.elements.spentToday.value;
+      if (spentToday) {
+        accountFinal += spentToday;
       }
-    );
+    }
+
+    calc(accountFinal, save, diff).then((json) => {
+      document.getElementById("results").removeAttribute("hidden");
+      document.getElementById("daily").innerHTML = json.daily;
+      if (spentToday) {
+        document.getElementById("dailyLeft").innerHTML =
+          "£" + (json.raw - spentToday);
+        toggleHidden("dailyLeftContainer");
+      } else {
+        document.getElementById("dailyLeft").innerHTML = "";
+      }
+    });
   }
+}
+
+function calc(account, save, diff) {
+  // not using url matching, but that seems kinda rubbish (at least for this use case)
+  return new Promise((resolve, reject) => {
+    fetch(`/calc?account=${account}&save=${save}&diff=${diff}`).then((res) => {
+      res.json().then((json) => {
+        // json: { daily: string, raw: number }
+        resolve(json);
+      });
+    });
+  });
 }
 
 function changePayday() {
@@ -99,4 +113,15 @@ function dateConverter(date) {
 function flipDisableForm() {
   formDisabled = !formDisabled;
   document.getElementById("main-submit").disabled = formDisabled;
+}
+
+function toggleHidden(id, showFunc, hideFunc) {
+  const element = document.getElementById(id);
+  if (element.hasAttribute("hidden")) {
+    element.removeAttribute("hidden");
+    if (showFunc) showFunc();
+  } else {
+    element.setAttribute("hidden", true);
+    if (hideFunc) hideFunc();
+  }
 }

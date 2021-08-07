@@ -2,7 +2,7 @@ import datetime
 import calendar
 
 
-def calcPayday(day = 15): # default day to 15, but allow for customisation
+def calcPayday(day=15):  # default day to 15, but allow for customisation
     currentDate = datetime.date.today()
 
     month = currentDate.month
@@ -18,15 +18,15 @@ def calcPayday(day = 15): # default day to 15, but allow for customisation
     if (weekday == 5):
         if (payday.day - 1 > 0):
             payday = payday.replace(day=payday.day-1)
-        else: # if subtracting 1 from the day will move back a year
+        else:  # if subtracting 1 from the day will move back a year
             monthrange = calendar.monthrange(currentDate.year, payday.month-1)
             payday = payday.replace(month=payday.month-1, day=monthrange[1])
     elif (weekday == 6):
         if (payday.day - 2 > 0):
             payday = payday.replace(day=payday.day-2)
-        else: # if subtracting 2 from the day will move back a year
+        else:  # if subtracting 2 from the day will move back a year
             monthrange = calendar.monthrange(currentDate.year, payday.month-1)
-            day = 999 # just initialising the variable
+            day = 999  # just initialising the variable
             if (payday.day == 1):
                 day = monthrange[1] - 1
             else:
@@ -43,4 +43,4 @@ def calcDiff(payday):
 
 
 def calcDaily(bankaccount, save, diff):
-    return "£" + str(round((bankaccount-save)/diff, 2))
+    return float(round((bankaccount-save)/diff, 2))

@@ -51,15 +51,26 @@
   <button id="advanced" type="button" class="btn btn-link mb-2">
     Advanced
   </button>
-  <div id="advanced-options" hidden>
-    <p>Advanced options</p>
+  <div id="advanced-options" class="text-center input" hidden>
+    <div class="input">
+      <label for="spentToday">Spent today</label>
+      <input type="number" id="spentToday" step="0.01" class="form-control" />
+      <small class="form-text text-white">
+        Do not remove this value from pending, this will be taken from there
+        automatically
+      </small>
+    </div>
   </div>
   <button id="main-submit" type="submit" class="btn btn-primary">Submit</button>
 </form>
 <div id="results-container">
-  <fieldset class="perDayContainer" id="results" hidden>
+  <fieldset class="perDayContainer pb-4" id="results" hidden>
     <legend class="perDayTitle">Spend per day</legend>
     <div class="daily" id="daily"></div>
+    <div id="dailyLeftContainer" class="daily" hidden>
+      <span class="dailyLeftTitle">Money left</span>
+      <div class="daily dailyLeft" id="dailyLeft"></div>
+    </div>
   </fieldset>
 </div>
 
