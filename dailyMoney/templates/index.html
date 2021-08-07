@@ -32,8 +32,13 @@
 >
   <label for="account">Money in account</label>
   <input type="number" id="account" step="0.01" class="form-control input" />
-  <label for="pending">Pending (not required)</label>
-  <input type="number" id="pending" step="0.01" class="form-control input" />
+  <div class="input text-center">
+    <label for="pending">Pending (not required)</label>
+    <input type="number" id="pending" step="0.01" class="form-control" />
+    <small class="form-text text-white">
+      This value will be taken from the account value
+    </small>
+  </div>
   <div class="text-center input">
     <label for="save">Money to save</label>
     <input
