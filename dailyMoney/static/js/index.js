@@ -49,26 +49,47 @@ function getDaily() {
     }
 
     let spentToday;
+    let posSpend;
 
     if (advanced) {
       spentToday = +form.elements.spentToday.value;
       if (spentToday) {
         accountFinal += spentToday;
       }
+
+      posSpend = form.elements.posSpend.value;
     }
 
-    calc(accountFinal, save, diff).then((json) => {
-      document.getElementById("results").removeAttribute("hidden");
-      document.getElementById("daily").innerHTML = json.daily;
-      if (spentToday) {
-        document.getElementById("dailyLeft").innerHTML =
-          "£" + (json.raw - spentToday);
-        toggleHidden("dailyLeftContainer");
-      } else {
-        document.getElementById("dailyLeft").innerHTML = "";
+    let requests = [calc(accountFinal, save, diff)];
+    if (posSpend && diff !== 1)
+      requests.push(calc(accountFinal - posSpend - spentToday, save, diff - 1));
+
+    Promise.all(requests).then((res) => {
+      displayResults(res[0], spentToday);
+      // if res[1] is truthy then posSpend can be done
+      if (res[1]) {
+        displayPosSpend(res[1]);
       }
     });
   }
+}
+
+function displayResults(json, spentToday) {
+  document.getElementById("results").removeAttribute("hidden");
+  document.getElementById("dailyVal").innerHTML = json.daily;
+  if (spentToday) {
+    document.getElementById("dailyLeft").innerHTML =
+      "£" + (json.raw - spentToday);
+    // toggleHidden("dailyLeftContainer");
+    document.getElementById("dailyLeftContainer").removeAttribute("hidden");
+  } else {
+    document.getElementById("dailyLeft").innerHTML = "";
+  }
+}
+
+function displayPosSpend(json) {
+  document.getElementById("posSpendRes").removeAttribute("hidden");
+  document.getElementById("posSpendVal").innerHTML = json.daily;
 }
 
 function calc(account, save, diff) {
