@@ -35,6 +35,8 @@ function loadFromLocal() {
 function getDaily() {
   // might be possible to submit the form when the submit button is disabled
   if (!formDisabled) {
+    hideResults();
+
     const form = document.getElementById("data-form");
     const account = form.elements.account.value;
     let pending = form.elements.pending.value;
@@ -68,7 +70,7 @@ function getDaily() {
       displayResults(res[0], spentToday);
       // if res[1] is truthy then posSpend can be done
       if (res[1]) {
-        displayPosSpend(res[1]);
+        displayPosSpend(res[1], spentToday, res[0], posSpend);
       }
     });
   }
@@ -80,16 +82,24 @@ function displayResults(json, spentToday) {
   if (spentToday) {
     document.getElementById("dailyLeft").innerHTML =
       "£" + (json.raw - spentToday);
-    // toggleHidden("dailyLeftContainer");
     document.getElementById("dailyLeftContainer").removeAttribute("hidden");
   } else {
     document.getElementById("dailyLeft").innerHTML = "";
   }
 }
 
-function displayPosSpend(json) {
+function displayPosSpend(json, spentToday, dailyToday, posSpend) {
   document.getElementById("posSpendRes").removeAttribute("hidden");
   document.getElementById("posSpendVal").innerHTML = json.daily;
+  if (spentToday) {
+    document.getElementById("posSpendDailyLeft").innerHTML =
+      "£" + (dailyToday.raw - spentToday - posSpend);
+    document
+      .getElementById("posSpendDailyLeftContainer")
+      .removeAttribute("hidden");
+  } else {
+    document.getElementById("posSpendDailyLeft").innerHTML = "";
+  }
 }
 
 function calc(account, save, diff) {
@@ -145,4 +155,14 @@ function toggleHidden(id, showFunc, hideFunc) {
     element.setAttribute("hidden", true);
     if (hideFunc) hideFunc();
   }
+}
+
+function hideResults() {
+  // hide everything rather than checking what might need to be hidden
+  document.getElementById("dailyLeftContainer").setAttribute("hidden", true);
+  document
+    .getElementById("posSpendDailyLeftContainer")
+    .setAttribute("hidden", true);
+  document.getElementById("results").setAttribute("hidden", true);
+  document.getElementById("posSpendRes").setAttribute("hidden", true);
 }
