@@ -14,10 +14,12 @@
 #results-container {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-.perDayContainer {
+.fieldsetStyle {
   border: 2px solid white;
   border-radius: 15px;
   padding: 1rem;
@@ -25,10 +27,16 @@
   max-width: 100%;
 }
 
-.perDayTitle {
+.fieldsetTitle {
   width: auto;
   text-align: center;
   padding: 0 1rem 0 1rem;
+}
+
+.fieldsetMain {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
 }
 
 .daily {

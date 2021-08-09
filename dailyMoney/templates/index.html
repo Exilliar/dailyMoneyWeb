@@ -65,16 +65,31 @@
         automatically
       </small>
     </div>
+    <div class="input">
+      <label for="posSpend">Possible spend</label>
+      <input type="number" id="posSpend" step="0.01" class="form-control" />
+      <small class="form-text text-white">
+        A possible spend, will show how that will affect tomorrows daily spend
+      </small>
+    </div>
   </div>
   <button id="main-submit" type="submit" class="btn btn-primary">Submit</button>
 </form>
 <div id="results-container">
-  <fieldset class="perDayContainer pb-4" id="results" hidden>
-    <legend class="perDayTitle">Spend per day</legend>
-    <div class="daily" id="daily"></div>
+  <fieldset class="fieldsetStyle pb-4" id="results" hidden>
+    <legend class="fieldsetTitle">Spend per day</legend>
+    <div class="fieldsetMain" id="dailyVal"></div>
     <div id="dailyLeftContainer" class="daily" hidden>
       <span class="dailyLeftTitle">Money left</span>
       <div class="daily dailyLeft" id="dailyLeft"></div>
+    </div>
+  </fieldset>
+  <fieldset class="fieldsetStyle pb-4" id="posSpendRes" hidden>
+    <legend class="fieldsetTitle">Possible spend</legend>
+    <div class="fieldsetMain" id="posSpendVal"></div>
+    <div id="posSpendDailyLeftContainer" class="daily" hidden>
+      <span class="dailyLeftTitle">Money left today</span>
+      <div class="daily dailyLeft" id="posSpendDailyLeft"></div>
     </div>
   </fieldset>
 </div>
