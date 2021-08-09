@@ -72,6 +72,10 @@ function getDaily() {
       if (res[1]) {
         displayPosSpend(res[1], spentToday, res[0], posSpend);
       }
+      // scroll to results
+      document.getElementById("results-container").scrollIntoView({
+        behavior: "smooth"
+      });
     });
   }
 }
